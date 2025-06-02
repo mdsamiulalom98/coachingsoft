@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Border Box</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f4f4f4;
+    }
+
+    .box-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      border: 2px solid #f47b20;
+      min-width: 150px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .card i {
+      font-size: 30px;
+      color: #f47b20;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .card p {
+      margin: 5px 0 0;
+      font-weight: bold;
+      color: #f47b20;
+    }
+
+    /* Orange border from left side */
+    .border-line {
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      width: 30px;
+      height: 30px;
+    }
+
+    .border-line::before,
+    .border-line::after {
+      content: "";
+      position: absolute;
+      background: #f47b20;
+    }
+
+    .border-line::before {
+      width: 20px;
+      height: 6px;
+      top: 12px;
+      left: 0;
+      border-top-left-radius: 6px;
+    }
+
+    .border-line::after {
+      width: 6px;
+      height: 30px;
+      top: 12px;
+      left: 14px;
+      border-bottom-left-radius: 6px;
+    }
+  </style>
+
+  <!-- Optional: FontAwesome for icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<div class="box-container">
+  <div class="border-line"></div>
+  <div class="card">
+    <i class="fas fa-globe"></i>
+    <h2>1963</h2>
+    <p>WEB DESIGNING</p>
+  </div>
+</div>
+
+</body>
+</html>
