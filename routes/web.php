@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\ChapterController;
 use App\Http\Controllers\Admin\LessonController;
+use App\Http\Controllers\Admin\OrderStatusController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SuccessStudentController;
 use App\Http\Controllers\Frontend\StudentController;
 use App\Http\Controllers\Frontend\FrontEndController;
@@ -45,6 +47,8 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
     Route::get('/notice', [FrontEndController::class, 'notice'])->name('notice');
     Route::get('notice-details/{id}', [FrontendController::class, 'notice_details'])->name('notice.details');
+
+    Route::get('/videos', [FrontendController::class, 'course_video'])->name('course.video');
 
 
     Route::post('cart/store', [ShoppingController::class, 'cart_store'])->name('cart.store');
@@ -86,7 +90,7 @@ Route::group(['namespace' => 'FrontEnd', 'middleware' => ['student']], function 
 });
 
 
-    Route::get('/ajax-product-subcategory', [LessonController::class, 'getSubcategory']);
+Route::get('/ajax-product-subcategory', [LessonController::class, 'getSubcategory']);
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'admin'], function () {
 
@@ -162,12 +166,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('batch/inactive', [BatchController::class, 'inactive'])->name('batches.inactive');
     Route::post('batch/active', [BatchController::class, 'active'])->name('batches.active');
 
-    
+
 
     // student
     Route::get('student/ajax-batch', [StudentManageController::class, 'ajax_batch'])->name('students.ajax_batch');
     Route::get('student/ajax-student', [StudentManageController::class, 'ajax_student'])->name('students.ajax_student');
     Route::get('student/manage', [StudentManageController::class, 'index'])->name('students.index');
+
+	Route::get('student/profile/{id}', [StudentManageController::class, 'profile'])->name('students.profile');
     Route::get('student/add', [StudentManageController::class, 'create'])->name('students.create');
     Route::post('student/save', [StudentManageController::class, 'store'])->name('students.store');
     Route::get('student/{id}/edit', [StudentManageController::class, 'edit'])->name('students.edit');
@@ -185,7 +191,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::get('payment/create', [PaymentController::class, 'create'])->name('payments.create');
     Route::post('payment/save', [PaymentController::class, 'store'])->name('payments.store');
     Route::get('payment/invoice', [PaymentController::class, 'invoice'])->name('payments.invoice');
-    
+
     // contact
     Route::get('contact/manage', [ContactController::class, 'index'])->name('contact.index');
     Route::post('contact/update', [ContactController::class, 'update'])->name('contact.update');
@@ -225,7 +231,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('mentor/inactive', [MentorController::class, 'inactive'])->name('mentors.inactive');
     Route::post('mentor/active', [MentorController::class, 'active'])->name('mentors.active');
     Route::post('mentor/delete', [MentorController::class, 'destroy'])->name('mentors.destroy');
-    
+
     // course
     Route::get('course/manage', [CourseController::class, 'index'])->name('courses.index');
     Route::get('course/create', [CourseController::class, 'create'])->name('courses.create');
@@ -248,7 +254,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('category/inactive', [CategoryController::class, 'inactive'])->name('categories.inactive');
     Route::post('category/active', [CategoryController::class, 'active'])->name('categories.active');
     Route::post('category/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
-    
+
     // book
     Route::get('book/manage', [BookController::class, 'index'])->name('books.index');
     Route::get('book/create', [BookController::class, 'create'])->name('books.create');
@@ -257,10 +263,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('book/update', [BookController::class, 'update'])->name('books.update');
     Route::post('book/inactive', [BookController::class, 'inactive'])->name('books.inactive');
     Route::post('book/active', [BookController::class, 'active'])->name('books.active');
-    Route::post('book/delete', [BookController::class, 'destroy'])->name('books.destroy'); 
+    Route::post('book/delete', [BookController::class, 'destroy'])->name('books.destroy');
 
 
-    // chapter 
+    // chapter
     Route::get('chapter/manage', [ChapterController::class, 'index'])->name('chapter.index');
     Route::get('chapter/create', [ChapterController::class, 'create'])->name('chapter.create');
     Route::post('chapter/save', [ChapterController::class, 'store'])->name('chapter.store');
@@ -270,7 +276,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('chapter/active', [ChapterController::class, 'active'])->name('chapter.active');
     Route::post('chapter/destroy', [ChapterController::class, 'destroy'])->name('chapter.destroy');
 
-     // lesson 
+    // lesson
     Route::get('lesson/manage', [LessonController::class, 'index'])->name('lesson.index');
     Route::get('lesson/create', [LessonController::class, 'create'])->name('lesson.create');
     Route::post('lesson/save', [LessonController::class, 'store'])->name('lesson.store');
@@ -290,4 +296,21 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('success-student/active', [SuccessStudentController::class, 'active'])->name('success_students.active');
     Route::post('success-student/delete', [SuccessStudentController::class, 'destroy'])->name('success_students.destroy');
     Route::post('success-year-add', [SuccessStudentController::class, 'success_year'])->name('success_year.add');
+
+    // order status
+    Route::get('orderstatus/manage', [OrderStatusController::class, 'index'])->name('orderstatus.index');
+    Route::get('orderstatus/{id}/show', [OrderStatusController::class, 'show'])->name('orderstatus.show');
+    Route::get('orderstatus/create', [OrderStatusController::class, 'create'])->name('orderstatus.create');
+    Route::post('orderstatus/save', [OrderStatusController::class, 'store'])->name('orderstatus.store');
+    Route::get('orderstatus/{id}/edit', [OrderStatusController::class, 'edit'])->name('orderstatus.edit');
+    Route::post('orderstatus/update', [OrderStatusController::class, 'update'])->name('orderstatus.update');
+    Route::post('orderstatus/inactive', [OrderStatusController::class, 'inactive'])->name('orderstatus.inactive');
+    Route::post('orderstatus/active', [OrderStatusController::class, 'active'])->name('orderstatus.active');
+    Route::post('orderstatus/destroy', [OrderStatusController::class, 'destroy'])->name('orderstatus.destroy');
+
+    // Order route
+    Route::get('order/{slug}', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('order/process/{invoice_id}', [OrderController::class, 'process'])->name('admin.order.process');
+    Route::post('order/change', [OrderController::class, 'order_process'])->name('admin.order_change');
+
 });

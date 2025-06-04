@@ -1,0 +1,354 @@
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: 100%;
+}
+
+li {
+    display: inline-block;
+    list-style: none;
+}
+
+
+
+
+
+
+
+
+/*==== STUDENT DASHBOARD CSS START ====*/
+.content-deshboard {
+    padding: 20px;
+}
+
+.counter-item {
+    background: #f5f5f5;
+    padding: 11px 10px;
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bg-1 {
+    background: linear-gradient(to right, #28C6AD, #40E696);
+}
+
+.bg-2 {
+    background: linear-gradient(to right, #A058FA, #DA69DD);
+}
+
+.bg-3 {
+    background: linear-gradient(to right, #8F68FA, #58C7F3);
+}
+
+.bg-4 {
+    background: linear-gradient(to right, #FCB22B, #FB80A4);
+}
+
+.counter-item-left {
+    width: 35%;
+    float: left;
+}
+
+.counter-item-left p {
+    text-align: center;
+    margin-top: 2px;
+    border: 1px solid #ab9b9b;
+    height: 55px;
+    width: 55px;
+    line-height: 55px;
+    border-radius: 50px;
+    background: #f3eded;
+    margin-left: 5px;
+}
+
+.counter-item-left p i {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.counter-item-right {
+    width: 65%;
+    float: left;
+}
+
+.counter-item-right p {
+    margin-left: 10px;
+    color: #fff;
+}
+
+.counter-item-right h5 {
+    margin-left: 10px;
+    color: #fff;
+}
+
+
+.result_list_area {
+    padding: 20px 0;
+}
+
+.result_list {
+    background: #fff;
+    padding: 10px;
+    -webkit-box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 2px 12px 0px rgb(0 0 0 / 16%);
+    padding-top: 20px;
+}
+
+.result_list h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/*==== STUDENT DASHBOARD CSS END ====*/
+
+
+/*==== STUDENT PROFILE CSS START ====*/
+.profile-area {
+    background: #fff;
+    padding: 15px 0px;
+    box-shadow: 2px 2px 12px 0px rgb(213 146 0);
+    border-radius: 10px;
+}
+
+.profile-item {
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px 20px;
+    background: #d59200;
+    width: 203px;
+    margin-bottom: 15px;
+    border-radius: 10px 62px 10px 62px;
+    box-shadow: 2px 2px 12px 0px rgb(213 146 0 / 57%);
+}
+
+.profile_pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.profile-area p {
+    color: #fff;
+}
+
+p.st_id {
+    font-weight: 600;
+}
+
+.profile-info {
+    padding: 10px;
+}
+
+.profile-info h3 {
+    background: #f2f2f2;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.profile-info table tr td {
+    padding: 5px 10px !important;
+    font-size: 14px;
+}
+
+p.account-title {
+    font-size: 25px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/*==== STUDENT PROFILE CSS END ====*/
+
+.auth-content {
+    box-shadow: 0px 0px 5px 1px #ddd;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.auth-content input, .auth-content input:focus, .auth-content select, .auth-content select:focus {
+    border: 1px solid #ddd;
+    height: 44px;
+    border-radius: 5px;
+}
+
+.submit_btn {
+    background: #222;
+    color: #fff;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+
+/*==== ENROLLED COURSE START ====*/
+.course-item {
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 0px 6px 1px #ddd;
+    height: 100%;
+}
+
+.course-content {
+    padding: 20px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.course_name {
+    font-family: var(--bn-font);
+    font-size: 22px;
+    font-weight: 600;
+    min-height: 70px;
+    display: block;
+    flex: 1 1 auto;
+}
+
+.course-content ul {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0;
+}
+
+.course_fee {
+    font-size: 18px;
+    color: #555;
+    font-weight: 500;
+}
+
+.course_btn, .course_btn:focus {
+    font-family: var(--bn-font);
+    display: block;
+    width: 100%;
+    background: #222;
+    color: #fff !important;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 22px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.course_btn:hover {
+    background: var(--primary-color);
+}
+
+
+/*====  COURSE VIDEO STYLE START ====*/
+.video-details-inner {
+    display: grid;
+    grid-template-columns: 350px auto;
+    border-bottom: 1px solid #ddd;
+}
+
+div#accordion_video {
+    border: 1px solid #ddd;
+}
+
+.accordion-flush .accordion-item {
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+}
+
+
+.accordion-flush .accordion-item:first-child {
+    border-top: 0;
+}
+
+.accordion-flush .accordion-item:last-child {
+    border-bottom: 0;
+}
+
+.accordion-header {
+    margin-bottom: 0;
+}
+
+div#accordion_video .accordion-header button {
+    background: #ddd !important;
+    font-size: 22px;
+    font-weight: 600;
+    color: #435aa8;
+    font-family: 'Noto Sans Bengali';
+}
+
+#course_video ul {
+    color: #fff;
+    text-align: center;
+    background: #153e58a3;
+    font-size: 18px;
+    padding: 10px;
+    font-family: "Noto Sans Bengali", sans-serif;
+    margin-top: 12px;
+}
+
+.video_item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 0;
+    color: #666;
+    padding: 10px 10px;
+    transition: 0.35s all;
+}
+
+.video_item:hover, .video_item.active {
+    background: #ddd;
+}
+
+.video_name {
+    display: flex;
+    gap: 10px;
+    font-family: 'Noto Sans Bengali';
+}
+
+.video_name span a {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.video_name i {
+    color: #ff5200;
+}
+
+.video_length {
+    display: flex;
+    gap: 10px;
+}
+
+
+.video_length span {
+    font-size: 0.7rem;
+}
+
+.video-inner iframe {
+    width: 100%;
+    height: 100vh;
+    border: none;
+}

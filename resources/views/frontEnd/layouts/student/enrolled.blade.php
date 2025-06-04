@@ -31,14 +31,15 @@
                                             class="course_name">{{ $value->course->title }}</a>
                                         <ul>
                                             <li class="course_fee">
-                                                @if ($value->old_fee)
-                                                    <del>{{ $value->old_fee }}</del>
-                                                @endif {{ $value->course_fee }} Tk
+                                                @if ($value->course->old_fee)
+                                                    <del>{{ $value->course->old_fee }}</del>
+                                                @endif {{ $value->course->course_fee }} Tk
                                             </li>
-                                            <li>{{ $value->total_class }}</li>
+                                            <li>{{ $value->course->total_class }}</li>
                                         </ul>
-                                        <a href="{{ route('course.details', ['id' => $value->id]) }}" class="course_btn">
-                                            এনরোল করুন
+                                        <a href="{{ route('course.video', ['course' => $value->course->id]) }}"
+                                            class="course_btn">
+                                            দেখুন
                                         </a>
                                     </div>
                                 </div>
