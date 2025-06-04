@@ -69,7 +69,7 @@
                                             <select class="form-control select2" name="class_id" id="class_id" required>
                                                 <option value="">Select..</option>
                                                 @foreach($classrooms as $key=>$value)
-                                                <option value="{{$value->id}}"  {{$edit_data->department_id == $value->id ? 'selected' : ''}}>{{$value->name}}</option>
+                                                <option value="{{$value->id}}"  {{$edit_data->class_id == $value->id ? 'selected' : ''}}>{{$value->name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('class_id')

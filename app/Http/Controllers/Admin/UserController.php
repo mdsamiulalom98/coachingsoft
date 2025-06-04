@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use App\Models\User;
+use App\Models\SuccessStudent;
+use App\Models\StudentSession;
+use App\Models\Department;
+use App\Models\Classroom;
+use App\Models\Student;
+use App\Models\Course;
+use App\Models\Notice;
+use App\Models\Batch;
 use Auth;
 use Toastr;
 use Image;
@@ -24,7 +32,16 @@ class UserController extends Controller
     }
     public function dashboard()
     {
-        return view('backEnd.user.dashboard');
+
+        $total_course = Course::count();
+        $total_student = Student::count();
+        $success_student = SuccessStudent::count();
+        $total_notice = Notice::count();
+        $total_department = Department::count();
+        $total_class      = Classroom::count();
+        $total_session    = StudentSession::count();
+        $total_batch      = Batch::count();
+        return view('backEnd.user.dashboard', compact('total_course','total_student','success_student','total_notice','total_department','total_class','total_session','total_batch'));
     }
     public function index(Request $request)
     {

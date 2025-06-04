@@ -32,8 +32,8 @@
 										<li><a href="{{route('home')}}">হোম</a></li>
 										<li><a href="{{route('courses')}}">কোর্স</a></li>
 										<li><a href="{{route('books')}}">বই</a></li>
-										<li><a href="{{route('home')}}">পিডিএফ</a></li>
-										<li><a href="{{route('home')}}">টেস্ট</a></li>
+										<li><a href="{{route('pdf')}}">পিডিএফ</a></li>
+										<li><a href="{{route('exam')}}">টেস্ট</a></li>
 										<li><a href="{{route('notice')}}">নোটিশ</a></li>
 									</ul>
 								</div>
@@ -82,8 +82,8 @@
 	                    <li><a href="{{route('home')}}">হোম</a></li>
 						<li><a href="{{route('courses')}}">কোর্স</a></li>
 						<li><a href="{{route('books')}}">বই</a></li>
-						<li><a href="{{route('home')}}">পিডিএফ</a></li>
-						<li><a href="{{route('home')}}">টেস্ট</a></li>
+						<li><a href="{{route('pdf')}}">পিডিএফ</a></li>
+						<li><a href="{{route('exam')}}">টেস্ট</a></li>
 						<li><a href="{{route('notice')}}">নোটিশ</a></li>
 	                  </ul>
 	              </div>
@@ -149,9 +149,9 @@
 							<ul>
 								<li><a href="{{route('courses')}}">কোর্স</a></li>
 								<li><a href="{{route('books')}}">বই</a></li>
-								<li><a href="{{route('home')}}">পিডিএফ</a></li>
-								<li><a href="{{route('home')}}">টেস্ট</a></li>
-								<li><a href="{{route('home')}}">নোটিশ</a></li>
+								<li><a href="{{route('pdf')}}">পিডিএফ</a></li>
+								<li><a href="{{route('exam')}}">টেস্ট</a></li>
+								<li><a href="{{route('notice')}}">নোটিশ</a></li>
 							</ul>
 						</div>
 					</div>

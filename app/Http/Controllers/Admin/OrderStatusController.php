@@ -9,13 +9,13 @@ use App\Models\OrderStatus;
 
 class OrderStatusController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('permission:order-status-list|order-status-create|order-status-edit|order-status-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:order-status-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:order-status-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:order-status-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware('permission:order-status-list|order-status-create|order-status-edit|order-status-delete', ['only' => ['index', 'store']]);
+    //     $this->middleware('permission:order-status-create', ['only' => ['create', 'store']]);
+    //     $this->middleware('permission:order-status-edit', ['only' => ['edit', 'update']]);
+    //     $this->middleware('permission:order-status-delete', ['only' => ['destroy']]);
+    // }
 
     public function index(Request $request)
     {

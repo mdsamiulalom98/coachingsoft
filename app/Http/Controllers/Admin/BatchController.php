@@ -18,7 +18,7 @@ class BatchController extends Controller
          $this->middleware('permission:batch-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:batch-delete', ['only' => ['destroy']]);
     }
-
+    
     public function index(Request $request)
     {
         $data = Batch::orderBy('id','DESC')->with('department:id,name','class:id,name','session:id,name');
@@ -63,16 +63,16 @@ class BatchController extends Controller
             ->rawColumns(['status','action'])
             ->toJson();
         }
-
+        
         return view('backEnd.batch.index');
     }
-
+    
     public function create(){
         $departments = Department::where('status',1)->get();
         $sessions = StudentSession::where('status',1)->get();
         return view('backEnd.batch.create',compact('departments','sessions'));
     }
-
+    
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -88,7 +88,7 @@ class BatchController extends Controller
         Toastr::success('Success','Data store successfully');
         return redirect()->route('batches.index');
     }
-
+    
     public function edit($id)
     {
         $edit_data = Batch::find($id);
@@ -98,7 +98,7 @@ class BatchController extends Controller
         // return $edit_data;
         return view('backEnd.batch.edit',compact('edit_data','departments','sessions','classrooms'));
     }
-
+    
     public function update(Request $request)
     {
         $this->validate($request, [

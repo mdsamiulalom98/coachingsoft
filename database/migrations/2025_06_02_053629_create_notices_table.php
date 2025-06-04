@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notices', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('titile');
+            $table->string('title');
             $table->string('link');
             $table->string('last_date');
             $table->longText('description');

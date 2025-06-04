@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{{asset('public/backEnd/assets/css/dropify.min.css')}}">
 <link href="{{ asset('public/backEnd') }}/assets/css/summernote-lite.min.css" rel="stylesheet"
         type="text/css" />
-
 @endpush
 @section('content')
 <section class="wsit-container">

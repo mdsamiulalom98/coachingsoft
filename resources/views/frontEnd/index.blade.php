@@ -159,7 +159,7 @@
 						<ul>
 							<li><a>সব</a></li>
 							@foreach($success_years as $s_year)
-							<li><a href="{{route('success.student')}}">{{$s_year->name}}</a></li>
+							<li><a href="#">{{$s_year->name}}</a></li>
 							@endforeach
 						</ul>
 					</div>
@@ -210,7 +210,7 @@
                   nav: false,
               },
               1000: {
-                  nav: false,
+                  nav: true,
               },
           },
     });

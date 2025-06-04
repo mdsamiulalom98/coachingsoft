@@ -257,7 +257,7 @@
                                         <div class="form-group mb-3">
                                             <label for="image" class="form-label">Image <span>*</span></label>
                                             <input type="file" class="dropify form-control @error('image') is-invalid @enderror"
-                                                name="image" value="{{old('image') }}" id="image" required>
+                                                name="image" value="{{old('image') }}" id="image">
                                             @error('image')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

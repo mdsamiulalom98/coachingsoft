@@ -1,6 +1,11 @@
 @extends('backEnd.layouts.master')
 @section('title','Notice Create')
 @section('content')
+@push('css')
+<link rel="stylesheet" href="{{asset('public/backEnd/assets/css/flatpickr.min.css')}}">
+<link href="{{ asset('public/backEnd') }}/assets/css/summernote-lite.min.css" rel="stylesheet"
+        type="text/css" />
+@endpush
 <section class="wsit-container">
 	<div class="wsit-content">
 		<div class="page-header">
@@ -117,5 +122,18 @@
 		</div>
 	</div>
 </section>
-
 @endsection
+@push('script')
+<script src="{{asset('public/backEnd/assets/js/flatpickr.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropify').dropify();
+    });
+</script>
+<script src="{{ asset('public/backEnd/') }}/assets/js/summernote-lite.min.js"></script>
+<script>
+    $(".summernote").summernote({
+        placeholder: "Enter Your Text Here",
+    });
+</script>
+@endpush

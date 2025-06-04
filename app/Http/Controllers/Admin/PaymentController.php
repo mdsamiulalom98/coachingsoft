@@ -20,7 +20,7 @@ class PaymentController extends Controller
         $sessions = StudentSession::where('status',1)->get();
         $classrooms = [];
         $batches   = [];
-        $batchstudents   = [];
+        $students  = [];
         $find_batch   = null;
 
         $data = [];
@@ -30,7 +30,7 @@ class PaymentController extends Controller
             if ($request->department_id) {
                 $data = Student::orderBy('id', 'asc')
                     ->with(['batch', 'attendances'])
-                    ->select('id','department_id','class_id','session_id','batch_id','name','roll_number')
+                    ->select('id','department_id','class_id','session_id','batch_id','name','roll_number','course_fee')
                     ->where('department_id', $request->department_id);
 
                 $classrooms = Classroom::where('department_id', $request->department_id)->get();
@@ -47,8 +47,18 @@ class PaymentController extends Controller
 
             if ($request->batch_id) {
                 $data = $data->where('batch_id', $request->batch_id);
-                $batchdata = $data->get();
                 $find_batch = Batch::where('id', $request->batch_id)->select('id', 'payment_type', 'course_fee')->first();
+                $students = Student::where('batch_id', $request->batch_id)->select('id','roll_number', 'name')->get();
+            }
+
+            if($request->status == 'due'){
+                $paidstudent = Payment::where('month', $request->month)->pluck('student_id')->toArray();
+                $data = $data->whereNotIn('id',$paidstudent);
+            }
+
+            if($request->status == 'paid'){
+                $paidstudent = Payment::where('month', $request->month)->pluck('student_id')->toArray();
+                $data = $data->whereIn('id',$paidstudent);
             }
 
             if ($request->student_id) {
@@ -56,6 +66,7 @@ class PaymentController extends Controller
             }
         
             $data = $data->get();
+
 
            
         }
@@ -70,11 +81,13 @@ class PaymentController extends Controller
             $currentDate->subMonth();
         }
         $months = array_reverse($months);
-        return view('backEnd.payment.create',compact('data','departments','sessions','classrooms','batches','batchstudents','months','find_batch'));
+// return $months;
+        return view('backEnd.payment.create',compact('data','departments','sessions','classrooms','batches','students','months','find_batch'));
     }
     public function store(Request $request){
 
         $student_ids = $request->student_id;
+        $batch_id = $request->batch_id;
         $paid_by = $request->paid_by;
         $payids = [];
 
@@ -84,12 +97,15 @@ class PaymentController extends Controller
 
             if ($batch->payment_type == 2) {
                 if (!empty($request->amount[$key])) {
+
                     $payment = new Payment();
                     $payment->date = date('Y-m-d');
                     $payment->student_id = $student_id;
+                    $payment->batch_id   = $batch->id;
                     $payment->amount = $request->amount[$key];
                     $payment->month = $request->month[$key];
                     $payment->paid_by = $paid_by;
+                    $payment->type  = 2;
                     $payment->status = 1;
                     $payment->save();
 
@@ -110,9 +126,11 @@ class PaymentController extends Controller
                             $payment = new Payment();
                             $payment->date = date('Y-m-d');
                             $payment->student_id = $student_id;
+                            $payment->batch_id = $batch->id;
                             $payment->amount = $request->$amountField[$key];
                             $payment->month = $request->$monthField[$key];
                             $payment->paid_by = $paid_by;
+                            $payment->type = 1;
                             $payment->status = 1;
                             $payment->save();
 
@@ -132,7 +150,7 @@ class PaymentController extends Controller
         $sessions = StudentSession::where('status',1)->get();
         $classrooms = [];
         $batches   = [];
-        $batchstudents   = [];
+        $students   = [];
         $find_batch   = null;
 
         $data = [];
@@ -141,7 +159,7 @@ class PaymentController extends Controller
 
             if ($request->department_id) {
                 $data = Student::orderBy('id', 'asc')
-                    ->with(['batch', 'attendances'])
+                    ->with(['batch'])
                     ->select('id','department_id','class_id','session_id','batch_id','name','roll_number')
                     ->where('department_id', $request->department_id);
 
@@ -159,8 +177,17 @@ class PaymentController extends Controller
 
             if ($request->batch_id) {
                 $data = $data->where('batch_id', $request->batch_id);
-                $batchdata = $data->get();
                 $find_batch = Batch::where('id', $request->batch_id)->select('id', 'payment_type', 'course_fee')->first();
+                $students = Student::where('batch_id', $request->batch_id)->select('id','roll_number', 'name')->get();
+            }
+            if($request->status == 'due'){
+                $paidstudent = Payment::where('month', $request->month)->pluck('student_id')->toArray();
+                $data = $data->whereNotIn('id',$paidstudent);
+            }
+
+            if($request->status == 'paid'){
+                $paidstudent = Payment::where('month', $request->month)->pluck('student_id')->toArray();
+                $data = $data->whereIn('id',$paidstudent);
             }
 
             if ($request->student_id) {
@@ -178,10 +205,11 @@ class PaymentController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             $date = Carbon::create($year, $i, 1);
             $months[] = [
-                'month' => $date->format('M')
+                'month' => $date->format('M Y')
             ];
         }
-        return view('backEnd.payment.index',compact('data','departments','sessions','classrooms','batches','batchstudents','months','find_batch'));
+
+        return view('backEnd.payment.index',compact('data','departments','sessions','classrooms','batches','students','months','find_batch'));
     }
     public function invoice(Request $request)
     {

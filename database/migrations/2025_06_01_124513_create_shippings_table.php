@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
-            $table->integer('student_id');
+            $table->integer('order_id')->index();
+            $table->integer('student_id')->index();
             $table->string('name')->length('155');         
-            $table->string('phone')->length('55');    
+            $table->string('phone')->length('55')->index();    
             $table->string('address')->length('256');       
             $table->string('area')->length('100');    
             $table->timestamps();

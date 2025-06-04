@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 use Ashraam\LaravelSimpleCart\Facades\Cart;
+use App\Models\ProductVariable;
 use App\Models\Book;
 
 class ShoppingController extends Controller
 {
 
-    public function cart_store(Request $request)
+     public function cart_store(Request $request)
     {
         $book = Book::select('id', 'title', 'price', 'old_price', 'category_id', 'image', 'stock', 'sold')->where(['id' => $request->book_id])->first();
 
@@ -46,7 +47,17 @@ class ShoppingController extends Controller
         Toastr::success('Book successfully add to cart', 'Success!');
         return redirect()->back();
     }
+    public function campaign_stock(Request $request)
+    {
+        $product = ProductVariable::where(['product_id' => $request->id, 'color' => $request->color, 'size' => $request->size])->first();
 
+        $status = $product ? true : false;
+        $response = [
+            'status' => $status,
+            'product' => $product
+        ];
+        return response()->json($response);
+    }
     public function cart_content(Request $request)
     {
         $data = Cart::instance('shopping')->content();
@@ -85,7 +96,7 @@ class ShoppingController extends Controller
         return view('frontEnd.layouts.ajax.mobilecart_qty', compact('data'));
     }
 
-
+    
     public function cart_increment_camp(Request $request)
     {
         $item = Cart::instance('shopping')->get($request->id);

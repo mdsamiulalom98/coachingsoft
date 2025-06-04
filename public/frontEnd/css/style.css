@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&display=swap');
-
 body {
     font-family: "Anek Bangla", sans-serif;
     font-size: 15px;
@@ -127,13 +126,11 @@ h6 {
     padding: 15px 0;
     border-bottom: 1px solid #ddd;
 }
-
 .logo-menu-auth {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 .menu ul li a {
     font-size: 17px;
     font-weight: 600;
@@ -141,11 +138,9 @@ h6 {
     padding: 0 10px;
     transition: 0.35s all;
 }
-
 .menu ul li a:hover {
-    color: var(--primary-color);
+   color: var(--primary-color);
 }
-
 .auth ul li a {
     font-size: 17px;
     font-weight: 600;
@@ -153,20 +148,17 @@ h6 {
     border: 1px solid var(--primary-color);
     padding: 4px 15px;
     border-radius: 10px;
-    color: var(--primary-color);
-    ;
+    color:  var(--primary-color);;
     transition: 0.35s all;
 }
 
-.auth ul li a.active, .auth ul li a:hover {
+.auth ul li a.active,.auth ul li a:hover {
     background: var(--primary-color);
     color: #fff;
 }
-
 .mobile-menu {
     display: none;
 }
-
 .mobile-header {
     display: none;
 }
@@ -187,50 +179,44 @@ h6 {
     border-radius: 10px;
     overflow: hidden;
 }
-
-.owl-prev, .owl-next {
+.owl-prev,.owl-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
-
-.owl-prev span, .owl-next span {
+.owl-prev span,.owl-next span {
     font-size: 30px;
 }
 
 .owl-prev {
     height: 50px;
     width: 50px;
-    background: rgba(92, 175, 70, 0.5) !important;
+    background: rgba(92,175,70,0.5) !important;
     z-index: 9999;
     left: -25px;
     border-radius: 50px;
     color: #fff !important;
     transition: 0.35s all;
 }
-
 .owl-next {
     height: 50px;
     width: 50px;
-    background: rgba(92, 175, 70, 0.5) !important;
+    background: rgba(92,175,70,0.5) !important;
     z-index: 9999;
     right: -25px;
     border-radius: 50px;
     color: #fff !important;
     transition: 0.35s all;
 }
-
-.owl-prev:hover, .owl-next:hover {
-    background: rgba(92, 175, 70, 1) !important;
+.owl-prev:hover,.owl-next:hover {
+     background: rgba(92,175,70,1) !important;
 }
-
 /*==== SLIDER CSS END ====*/
 
 /*==== COUNTER CSS START ====*/
 .counter-section {
     padding: 30px 0;
 }
-
 .counter-heading {
     text-align: center;
     margin-bottom: 35px;
@@ -250,13 +236,11 @@ h6 {
     border-radius: 10px;
     background: #fff;
 }
-
 .total_counter {
     font-size: 25px;
     font-weight: 600;
     margin: 5px 0;
 }
-
 .counter-content i {
     color: var(--primary-color);
     font-size: 18px;
@@ -271,7 +255,6 @@ h6 {
 .orange-color.counter-item {
     border-color: #F27F21 !important;
 }
-
 .orange-color .counter-content i {
     color: #F27F21;
 }
@@ -283,7 +266,6 @@ h6 {
 .cyan-color.counter-item {
     border-color: #4ACCDB !important;
 }
-
 .cyan-color .counter-content i {
     color: #4ACCDB;
 }
@@ -295,7 +277,6 @@ h6 {
 .red-color.counter-item {
     border-color: #EE436D !important;
 }
-
 .red-color .counter-content i {
     color: #EE436D;
 }
@@ -348,9 +329,8 @@ a.more-details {
     color: #fff;
     border-radius: 10px;
 }
-
 a.more-details:hover {
-    box-shadow: 2px 3px 1px #222;
+    box-shadow: 2px 3px  1px #222;
 }
 
 .about-content ul li:after {
@@ -371,11 +351,10 @@ a.more-details:hover {
     left: 4px;
     top: 7px;
     content:
-        "";
+    "";
     background: #ddd;
     border-radius: 2px;
 }
-
 /*==== ABOUT CSS END ====*/
 
 /*==== COURSE CARD CSS START ====*/
@@ -388,12 +367,10 @@ a.more-details:hover {
     display: flex;
     justify-content: space-between;
 }
-
 .section-heading h1 {
     font-weight: 700;
     font-size: 33px;
 }
-
 .course-item {
     border-radius: 5px;
     overflow: hidden;
@@ -424,7 +401,7 @@ a.more-details:hover {
     font-weight: 500;
 }
 
-.course_btn, .course_btn:focus {
+.course_btn,.course_btn:focus {
     display: block;
     width: 100%;
     background: #222;
@@ -435,11 +412,9 @@ a.more-details:hover {
     border-radius: 8px;
     font-weight: 600;
 }
-
 a.course_btn:hover {
     background: var(--primary-color);
 }
-
 /*==== COURSE CARD CSS END ====*/
 
 /*==== BOOK CSS START ====*/
@@ -447,7 +422,6 @@ a.course_btn:hover {
     padding: 20px 0;
     /*background: url('../images/dot-grid.webp');*/
 }
-
 .book-item {
     background: #fff;
     border: 2px solid var(--secondary-color);
@@ -471,11 +445,9 @@ a.course_btn:hover {
     color: var(--primary-color);
     font-weight: 600;
 }
-
 h5.price-amount del {
     color: var(--secondary-color);
 }
-
 a.buy-now {
     background: var(--primary-color);
     color: #fff;
@@ -485,11 +457,9 @@ a.buy-now {
     font-weight: 600;
     border-radius: 50px;
 }
-
 a.buy-now:hover {
-    box-shadow: 2px 3px 1px #222;
+    box-shadow: 2px 3px  1px #222;
 }
-
 /*==== BOOK CSS END ====*/
 
 /*==== SUCCESS HISTORY CSS START ====*/
@@ -505,18 +475,15 @@ a.buy-now:hover {
     padding: 10px 20px;
     border-radius: 5px;
 }
-
 .session-tab ul li a {
     color: #fff;
 }
-
 .session-tab ul li {
     font-size: 18px;
     margin: 0 10px;
     font-weight: 600;
     cursor: pointer;
 }
-
 .student-inner {
     box-shadow: 0px 0px 6px 5px #ddd;
     padding: 30px;
@@ -548,7 +515,6 @@ a.buy-now:hover {
 .success-history-section {
     padding: 50px 0;
 }
-
 .all-success {
     text-align: right;
 }
@@ -564,12 +530,10 @@ a.buy-now:hover {
     padding: 3px 20px;
     border-radius: 5px;
 }
-
 .all-success a:hover {
     background: var(--secondary-color);
     color: #fff;
 }
-
 a.all_btns {
     border: 2px solid #222;
     display: inline-block;
@@ -582,7 +546,6 @@ a.all_btns:hover {
     background: #222;
     color: #fff;
 }
-
 /*==== SUCCESS HISTORY CSS END ====*/
 
 /*==== FOOTER CSS START ====*/
@@ -597,7 +560,6 @@ a.all_btns:hover {
     padding: 15px 0;
     border-top: 1px solid #555;
 }
-
 .copyright p {
     color: #f1f1f1;
 }
@@ -618,7 +580,6 @@ a.all_btns:hover {
 .footer-logo {
     margin-bottom: 15px;
 }
-
 h4.quick-title {
     color: var(--secondary-color);
     font-size: 18px;
@@ -637,12 +598,10 @@ h4.quick-title {
     margin: 3px 0;
     display: inline-block;
 }
-
 .footer-quick ul li a:hover {
     margin-left: 2px;
     color: var(--primary-color);
 }
-
 .footer-contact ul li {
     display: flex;
     color: #fff;
@@ -650,7 +609,6 @@ h4.quick-title {
     align-items: center;
     margin-bottom: 15px;
 }
-
 .footer-contact ul li i {
     background: #363333;
     color: var(--primary-color);
@@ -674,12 +632,10 @@ h4.quick-title {
     text-align: center;
     padding: 35px;
 }
-
 .page-banner p {
     color: #ddd;
     margin: 8px 0;
 }
-
 .course-video {
     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.09);
     padding: 15px;
@@ -699,7 +655,6 @@ h4.quick-title {
     margin: 15px 0;
     font-size: 32px;
 }
-
 /*==== COURSE DETAILS CSS END ====*/
 
 
@@ -711,7 +666,7 @@ h4.quick-title {
     padding: 30px;
 }
 
-.auth-content input, .auth-content input:focus, .auth-content select, .auth-content select:focus {
+.auth-content input,.auth-content input:focus,.auth-content select,.auth-content select:focus {
     border: 1px solid #ddd;
     height: 44px;
     border-radius: 5px;
@@ -725,7 +680,6 @@ h4.quick-title {
     font-weight: 600;
     color: #555;
 }
-
 .submit_btn {
     background: #222;
     color: #fff;
@@ -737,24 +691,20 @@ h4.quick-title {
     font-size: 16px;
     border-radius: 5px;
 }
-
 .auth-extra a {
     text-decoration: underline;
     font-weight: 600;
 }
-
 /*==== AUTH  CSS END ====*/
 
 /*==== BOOK DETAILS CSS START ====*/
 .book-image {
     height: 550px;
 }
-
 .book-details h1 {
     font-size: 33px;
     font-weight: 600;
 }
-
 .b-author {
     display: flex;
     align-items: center;
@@ -786,7 +736,7 @@ h4.quick-title {
 
 .book-infoes {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4,1fr);
     gap: 10px;
 }
 
@@ -802,7 +752,6 @@ h4.quick-title {
 .book-con p {
     color: #fff;
 }
-
 .book-price-inner {
     margin: 25px 0;
     text-align: center;
@@ -810,15 +759,12 @@ h4.quick-title {
     padding: 15px;
     border-radius: 5px;
 }
-
 .book-price-inner h4 {
-    color: var(--primary-color)
+   color : var(--primary-color)
 }
-
-.book-price-inner h4 del {
-    color: var(--secondary-color)
+.book-price-inner h4 del{
+   color : var(--secondary-color)
 }
-
 button.buy-now-btn {
     width: 100%;
     background: var(--primary-color);
@@ -828,7 +774,6 @@ button.buy-now-btn {
     font-size: 18px;
     border-radius: 5px;
 }
-
 .side_cart {
     position: fixed;
     right: 40px;
@@ -840,8 +785,8 @@ button.buy-now-btn {
     line-height: 45px;
     text-align: center;
     border-radius: 50px;
+    z-index: 99;
 }
-
 .side_cart span {
     position: absolute;
     top: -5px;
@@ -858,7 +803,6 @@ button.buy-now-btn {
     color: #fff;
     font-size: 20px;
 }
-
 /*==== BOOK DETAILS CSS END ====*/
 
 /*==== CHECKOUT  CSS START ====*/
@@ -887,15 +831,13 @@ button.buy-now-btn {
     font-size: 25px;
     font-weight: 600;
 }
-
 .qty-wrapper {
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
 }
-
 .qty-wrapper button {
     padding: 5px 12px;
     background: #eee;
@@ -904,7 +846,6 @@ button.buy-now-btn {
     cursor: pointer;
     font-weight: 600;
 }
-
 .qty-wrapper input {
     width: 50px;
     text-align: center;
@@ -912,7 +853,6 @@ button.buy-now-btn {
     font-size: 16px;
     font-weight: 600;
 }
-
 .cart-price h4 {
     margin-top: 5px;
     color: var(--primary-color);
@@ -923,7 +863,6 @@ button.buy-now-btn {
 .cart-price h4 del {
     color: var(--secondary-color);
 }
-
 button.cart_remove {
     background: var(--secondary-color);
     color: #fff;
@@ -931,25 +870,21 @@ button.cart_remove {
     border-radius: 8px;
     font-size: 14px;
 }
-
 table.table.custom-table {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
 /*==== CHECKOUT  CSS END ====*/
 
 /*==== COURSE DETAILS CSS START ====*/
 .course-details-section {
     padding: 40px 0;
 }
-
 .course-curriculam .accordion-button {
     font-size: 18px;
     color: #444 !important;
     font-weight: 600;
 }
-
 .course-curriculam #course_accordion {
     margin-top: 20px;
 }
@@ -974,30 +909,24 @@ ul.lesson-list li p {
 ul.lesson-list {
     padding-left: 15px;
 }
-
 .accordion-button:not(.collapsed) {
     background: var(--primary-color);
     color: #fff !important;
 }
-
 .course-description {
     border: 1px solid #ddd;
     padding: 15px;
 }
-
 .description-title {
     margin-top: 35px;
     margin-bottom: 15px;
 }
-
 .course-price.course-modal .modal-header {
     padding: 0 20px;
 }
-
 .course-modal .modal-title {
     font-size: 25px;
 }
-
 .payment-form-body ul li {
     display: flex;
     justify-content: space-between;
@@ -1006,77 +935,75 @@ ul.lesson-list {
 .payment-form-body ul li h4 {
     font-size: 18px;
 }
-
 .payment-form-body ul {
     margin-bottom: 16px;
     padding: 15px 10px;
     background: #f1f1f1;
     border-radius: 5px;
 }
-
 /*==== COURSE DETAILS CSS END ====*/
+
+
 /*==== NOTICE SECTION CSS START ====*/
 .notice-section {
-    padding: 30px 0;
-    background-color: #fff;
+  padding: 30px 0;
+  background-color: #fff;
 }
 
 .notice-table table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
 .notice-table thead th {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 12px;
-    font-weight: bold;
-    text-align: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .notice-table tbody td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    vertical-align: middle;
-    text-align: center;
+  border: 1px solid #ddd;
+  padding: 12px;
+  vertical-align: middle;
+  text-align: center;
 }
-
 td.notice-title {
     text-align: left !important;
 }
 
 .notice-table tbody tr:nth-child(even) {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .notice-table tbody tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 .notice-table .download-btn {
-    background-color: #000;
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
+  background-color: #000;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .notice-table .download-btn:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 .notice-table .view-link {
-    color: orange;
-    font-weight: bold;
-    text-decoration: none;
+  color: orange;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .notice-table .view-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
 /*==== NOTICE SECTION CSS END ====*/

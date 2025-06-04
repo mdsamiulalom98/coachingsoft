@@ -22,11 +22,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $setting = Setting::limit(1)->first();
-        view()->share('setting',$setting);
+        view()->share('setting',$setting); 
 
         $contact = Contact::limit(1)->first();
         view()->share('contact',$contact);
-
+        
         $contact = Contact::limit(1)->first();
         view()->share('contact',$contact);
 

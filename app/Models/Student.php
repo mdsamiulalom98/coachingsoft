@@ -24,5 +24,9 @@ class Student extends Authenticatable
     public function attendances(){
         return $this->hasMany(Attendance::class);
     }
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 
 }

@@ -8,7 +8,7 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col-auto">
                         <div class="page-header-title">
-                        <h4 class="m-b-10">Payment</h4>
+                        <h4 class="m-b-10">Payment Manage</h4>
                         </div>
                            <ul class="breadcrumb">
                               <li class="breadcrumb-item">
@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-auto">
                         <div class="quick_btn">
-                            <a href="{{route('students.create')}}"><i class="ti ti-plus"></i> Payment List</a>
+                            <a href="{{route('payments.create')}}"><i class="ti ti-plus"></i> Payment Create</a>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             <form class="row ">
-                                <div class="col-sm-2">
+                                <div class="col-sm-12 d-flex gap-2">
                                     <div class="form-group">
                                         <select class="form-control select2" name="department_id" id="department_id" required>
                                             <option value="">Select Department *</option>
@@ -52,9 +52,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>
-                                <!-- col end -->
-                                <div class="col-sm-2">
+                                    {{-- from group end --}}
                                     <div class="form-group ">
                                         <select class="form-control select2" name="class_id" id="class_id" required>
                                             <option value="">Select Class *</option>
@@ -68,9 +66,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>
-                                <!-- col end -->
-                                <div class="col-sm-2">
+                                    {{-- from group end --}}
                                     <div class="form-group">
                                         <select class="form-control select2" name="session_id" id="session_id" required>
                                             <option value="">Select Session *</option>
@@ -84,9 +80,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>
-                                <!-- col end -->
-                                <div class="col-sm-2">
+                                    {{-- from group end --}}
                                     <div class="form-group ">
                                         <select class="form-control select2" name="batch_id" id="batch_id" required>
                                             <option value="">Select Batch *</option>
@@ -100,13 +94,28 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>
-                                <!-- col end -->
-                                <div class="col-sm-2">
+                                    {{-- from group end --}}
+                                  <div class="form-group">
+                                    <select  id="month" name="month" class="select2 form-control{{ $errors->has('month') ? ' is-invalid' : '' }}" >
+                                    <option value="">Select Month</option>
+                                    @foreach($months as $month)
+                                     <option value="{{$month['month']}}" {{request('month') == $month['month'] ? 'selected' : ''}}>{{$month['month']}}</option>
+                                    @endforeach
+                                    </select>
+                                  </div>
+                                  {{-- from group end --}}
+                                    <div class="form-group">
+                                      <select  id="status" name="status" class="status select2 form-control{{ $errors->has('status') ? ' is-invalid' : '' }}">
+                                        <option value="">Paid/Due</option>
+                                        <option value="paid" {{request('status') == 'paid' ? 'selected' :''}}>Paid</option>
+                                        <option value="due" {{request('status') == 'due' ? 'selected' :''}}>Due</option>
+                                      </select>
+                                    </div>
+                                    {{-- from group end --}}
                                     <div class="form-group ">
                                         <select class="form-control select2" name="student_id" id="student_id">
                                             <option value="">Select Student..</option>
-                                            @foreach($batchstudents as $key=>$value)
+                                            @foreach($students as $key=>$value)
                                             <option value="{{$value->id}}" {{request('student_id') == $value->id ? 'selected' : ''}}>{{$value->name}}</option>
                                             @endforeach
                                         </select>
@@ -116,14 +125,12 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>
-                                <!-- col end -->
-                                <div class="col-sm-2">
+                                    {{-- from group end --}}
                                     <div class="form-group ">
                                        <button class="btn btn-success" id="filter">Search</button>
                                     </div>
+
                                 </div>
-                                <!-- col end -->
                             </form>
                             <div class="payment-form mt-3">
                                     <table id="example" class="table table-bordered table-striped table-responsive-sm sm-form">
@@ -166,14 +173,13 @@
                                               $find_pay = App\Models\Payment::where(['student_id'=>$value->id,'month'=>$month['month']])->select('id','student_id','month','amount')->first();
                                             @endphp
                                             <td>
-                                               <p>{{$find_pay?$find_pay->amount:''}}</p>
+                                               <p class="{{$month['month'] == request('month') ? 'text-primary' : ''}}">{{$find_pay? $find_pay->amount :''}} </p>
                                             </td>
                                             @endforeach
                                             @endif
                                         </tr>
                                         @endforeach
                                       </tbody>
-
                                     </table> 
                             </div>
                         </div>

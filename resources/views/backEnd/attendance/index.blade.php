@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-auto">
                         <div class="quick_btn">
-                            <a href="{{route('students.create')}}"><i class="ti ti-plus"></i> Attendance List</a>
+                            <a href="{{route('attendances.create')}}"><i class="ti ti-plus"></i> Attendance Create</a>
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                                                     @elseif($status == 'absent')
                                                         <span class="badge bg-danger">A</span>
                                                     @else
-                                                        <span class="badge bg-secondary">-</span>
+                                                        <span class="badge bg-secondary">A</span>
                                                     @endif
                                                 @endforeach
                                                 </div>

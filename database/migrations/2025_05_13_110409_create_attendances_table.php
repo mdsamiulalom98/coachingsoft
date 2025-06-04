@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id');
+            $table->integer('student_id')->index();
             $table->string('status',55);
             $table->timestamps();
         });

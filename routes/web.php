@@ -13,9 +13,10 @@ use App\Http\Controllers\Admin\BatchController;
 use App\Http\Controllers\Admin\StudentManageController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Admin\ResultController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\NoticeController;
 use App\Http\Controllers\Admin\AboutusController;
 use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\CourseController;
@@ -23,12 +24,17 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\ChapterController;
 use App\Http\Controllers\Admin\LessonController;
+use App\Http\Controllers\Admin\SuccessStudentController;
+use App\Http\Controllers\Admin\NoticeController;
+use App\Http\Controllers\Admin\TestExamController;
+use App\Http\Controllers\Admin\SitePdfController;
 use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\SuccessStudentController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Frontend\StudentController;
 use App\Http\Controllers\Frontend\FrontEndController;
 use App\Http\Controllers\Frontend\ShoppingController;
+
 
 Auth::routes();
 
@@ -43,13 +49,13 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::post('course-order/save', [FrontendController::class, 'course_order'])->name('course.order.save');
     Route::get('/books', [FrontEndController::class, 'books'])->name('books');
     Route::get('/book-details', [FrontEndController::class, 'book_details'])->name('book.details');
-    Route::get('/success.student', [FrontEndController::class, 'success_student'])->name('success.student');
-    Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
     Route::get('/notice', [FrontEndController::class, 'notice'])->name('notice');
     Route::get('notice-details/{id}', [FrontendController::class, 'notice_details'])->name('notice.details');
-
-    Route::get('/videos', [FrontendController::class, 'course_video'])->name('course.video');
-
+    Route::get('/pdf', [FrontEndController::class, 'pdf'])->name('pdf');
+    Route::get('pdf-details/{id}', [FrontendController::class, 'pdf_details'])->name('pdf.details');
+    Route::get('/exam', [FrontEndController::class, 'exam'])->name('exam');
+    Route::get('/success.student', [FrontEndController::class, 'success_student'])->name('success.student');
+    Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
 
     Route::post('cart/store', [ShoppingController::class, 'cart_store'])->name('cart.store');
     Route::get('cart/remove', [ShoppingController::class, 'cart_remove'])->name('cart.remove');
@@ -81,6 +87,7 @@ Route::group(['namespace' => 'FrontEnd', 'middleware' => ['student']], function 
 
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
     Route::get('/enrollcourse', [StudentController::class, 'enrollcourse'])->name('student.enrollcourse');
+     Route::get('/videos', [StudentController::class, 'course_video'])->name('course.video');
     Route::get('/profile', [StudentController::class, 'profile'])->name('student.profile');
     Route::post('/profile-update', [StudentController::class, 'profile_update'])->name('student.profile_update');
     Route::get('/change-password', [StudentController::class, 'change_pass'])->name('student.change_pass');
@@ -90,7 +97,7 @@ Route::group(['namespace' => 'FrontEnd', 'middleware' => ['student']], function 
 });
 
 
-Route::get('/ajax-product-subcategory', [LessonController::class, 'getSubcategory']);
+    Route::get('/ajax-product-subcategory', [LessonController::class, 'getSubcategory']);
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'admin'], function () {
 
@@ -166,32 +173,56 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('batch/inactive', [BatchController::class, 'inactive'])->name('batches.inactive');
     Route::post('batch/active', [BatchController::class, 'active'])->name('batches.active');
 
-
+    
 
     // student
     Route::get('student/ajax-batch', [StudentManageController::class, 'ajax_batch'])->name('students.ajax_batch');
     Route::get('student/ajax-student', [StudentManageController::class, 'ajax_student'])->name('students.ajax_student');
+    Route::get('student/ajax-exam', [StudentManageController::class, 'ajax_exam'])->name('students.ajax_exam');
     Route::get('student/manage', [StudentManageController::class, 'index'])->name('students.index');
-
-	Route::get('student/profile/{id}', [StudentManageController::class, 'profile'])->name('students.profile');
     Route::get('student/add', [StudentManageController::class, 'create'])->name('students.create');
     Route::post('student/save', [StudentManageController::class, 'store'])->name('students.store');
     Route::get('student/{id}/edit', [StudentManageController::class, 'edit'])->name('students.edit');
     Route::post('student/update', [StudentManageController::class, 'update'])->name('students.update');
     Route::post('student/inactive', [StudentManageController::class, 'inactive'])->name('students.inactive');
     Route::post('student/active', [StudentManageController::class, 'active'])->name('students.active');
+    Route::get('student/profile/{id}', [StudentManageController::class, 'profile'])->name('students.profile');
 
     // attendances
-    Route::get('attendance/list', [AttendanceController::class, 'index'])->name('attendances.index');
+    Route::get('attendance/manage', [AttendanceController::class, 'index'])->name('attendances.index');
     Route::get('attendance/create', [AttendanceController::class, 'create'])->name('attendances.create');
     Route::post('attendance/save', [AttendanceController::class, 'store'])->name('attendances.store');
 
     // payments
-    Route::get('payment/list', [PaymentController::class, 'index'])->name('payments.index');
+    Route::get('payment/manage', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('payment/create', [PaymentController::class, 'create'])->name('payments.create');
     Route::post('payment/save', [PaymentController::class, 'store'])->name('payments.store');
     Route::get('payment/invoice', [PaymentController::class, 'invoice'])->name('payments.invoice');
 
+    // exams
+    Route::get('exam/manage', [ExamController::class, 'index'])->name('exams.index');
+    Route::get('exam/create', [ExamController::class, 'create'])->name('exams.create');
+    Route::post('exam/save', [ExamController::class, 'store'])->name('exams.store');
+    Route::get('exam/{id}/edit', [ExamController::class, 'edit'])->name('exams.edit');
+    Route::post('exam/update', [ExamController::class, 'update'])->name('exams.update');
+    Route::post('exam/inactive', [ExamController::class, 'inactive'])->name('exams.inactive');
+    Route::post('exam/active', [ExamController::class, 'active'])->name('exams.active');
+    Route::post('exam/delete', [ExamController::class, 'destroy'])->name('exams.destroy');
+
+
+    // result
+    Route::get('result/manage', [ResultController::class, 'index'])->name('results.index');
+    Route::get('result/create', [ResultController::class, 'create'])->name('results.create');
+    Route::get('result/quick', [ResultController::class, 'quick_result'])->name('results.quick_result');
+    Route::post('result/quick-import', [ResultController::class, 'quick_import'])->name('results.quick_import');
+    Route::post('result/save', [ResultController::class, 'store'])->name('results.store');
+
+    Route::get('result/{id}/edit', [ResultController::class, 'edit'])->name('results.edit');
+    Route::post('result/update', [ResultController::class, 'update'])->name('results.update');
+    Route::post('result/inactive', [ResultController::class, 'inactive'])->name('results.inactive');
+    Route::post('result/active', [ResultController::class, 'active'])->name('results.active');
+    Route::post('result/delete', [ResultController::class, 'destroy'])->name('results.destroy');
+    
     // contact
     Route::get('contact/manage', [ContactController::class, 'index'])->name('contact.index');
     Route::post('contact/update', [ContactController::class, 'update'])->name('contact.update');
@@ -211,16 +242,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('banner/active', [BannerController::class, 'active'])->name('banners.active');
     Route::post('banner/delete', [BannerController::class, 'destroy'])->name('banners.destroy');
 
-    // Notice
-    Route::get('notice/manage', [NoticeController::class, 'index'])->name('notices.index');
-    Route::get('notice/create', [NoticeController::class, 'create'])->name('notices.create');
-    Route::post('notice/save', [NoticeController::class, 'store'])->name('notices.store');
-    Route::get('notice/{id}/edit', [NoticeController::class, 'edit'])->name('notices.edit');
-    Route::post('notice/update', [NoticeController::class, 'update'])->name('notices.update');
-    Route::post('notice/inactive', [NoticeController::class, 'inactive'])->name('notices.inactive');
-    Route::post('notice/active', [NoticeController::class, 'active'])->name('notices.active');
-    Route::post('notice/delete', [NoticeController::class, 'destroy'])->name('notices.destroy');
-
 
     // mentor
     Route::get('mentor/manage', [MentorController::class, 'index'])->name('mentors.index');
@@ -231,7 +252,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('mentor/inactive', [MentorController::class, 'inactive'])->name('mentors.inactive');
     Route::post('mentor/active', [MentorController::class, 'active'])->name('mentors.active');
     Route::post('mentor/delete', [MentorController::class, 'destroy'])->name('mentors.destroy');
-
+    
     // course
     Route::get('course/manage', [CourseController::class, 'index'])->name('courses.index');
     Route::get('course/create', [CourseController::class, 'create'])->name('courses.create');
@@ -254,7 +275,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('category/inactive', [CategoryController::class, 'inactive'])->name('categories.inactive');
     Route::post('category/active', [CategoryController::class, 'active'])->name('categories.active');
     Route::post('category/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
-
+    
     // book
     Route::get('book/manage', [BookController::class, 'index'])->name('books.index');
     Route::get('book/create', [BookController::class, 'create'])->name('books.create');
@@ -263,10 +284,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('book/update', [BookController::class, 'update'])->name('books.update');
     Route::post('book/inactive', [BookController::class, 'inactive'])->name('books.inactive');
     Route::post('book/active', [BookController::class, 'active'])->name('books.active');
-    Route::post('book/delete', [BookController::class, 'destroy'])->name('books.destroy');
+    Route::post('book/delete', [BookController::class, 'destroy'])->name('books.destroy'); 
 
 
-    // chapter
+    // chapter 
     Route::get('chapter/manage', [ChapterController::class, 'index'])->name('chapter.index');
     Route::get('chapter/create', [ChapterController::class, 'create'])->name('chapter.create');
     Route::post('chapter/save', [ChapterController::class, 'store'])->name('chapter.store');
@@ -276,7 +297,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('chapter/active', [ChapterController::class, 'active'])->name('chapter.active');
     Route::post('chapter/destroy', [ChapterController::class, 'destroy'])->name('chapter.destroy');
 
-    // lesson
+     // lesson 
     Route::get('lesson/manage', [LessonController::class, 'index'])->name('lesson.index');
     Route::get('lesson/create', [LessonController::class, 'create'])->name('lesson.create');
     Route::post('lesson/save', [LessonController::class, 'store'])->name('lesson.store');
@@ -286,7 +307,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('lesson/active', [LessonController::class, 'active'])->name('lesson.active');
     Route::post('lesson/destroy', [LessonController::class, 'destroy'])->name('lesson.destroy');
 
-    // book
+    // success
     Route::get('success/manage', [SuccessStudentController::class, 'index'])->name('success_students.index');
     Route::get('success-student/create', [SuccessStudentController::class, 'create'])->name('success_students.create');
     Route::post('success-student/save', [SuccessStudentController::class, 'store'])->name('success_students.store');
@@ -297,7 +318,42 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
     Route::post('success-student/delete', [SuccessStudentController::class, 'destroy'])->name('success_students.destroy');
     Route::post('success-year-add', [SuccessStudentController::class, 'success_year'])->name('success_year.add');
 
-    // order status
+    // report
+    Route::get('attendance/reports', [ReportController::class, 'attendance'])->name('attendances.reports');
+    Route::get('payment/reports', [ReportController::class, 'payment'])->name('payments.reports');
+    Route::get('result/reports', [ReportController::class, 'result'])->name('results.reports');
+
+     // Notice
+    Route::get('notice/manage', [NoticeController::class, 'index'])->name('notices.index');
+    Route::get('notice/create', [NoticeController::class, 'create'])->name('notices.create');
+    Route::post('notice/save', [NoticeController::class, 'store'])->name('notices.store');
+    Route::get('notice/{id}/edit', [NoticeController::class, 'edit'])->name('notices.edit');
+    Route::post('notice/update', [NoticeController::class, 'update'])->name('notices.update');
+    Route::post('notice/inactive', [NoticeController::class, 'inactive'])->name('notices.inactive');
+    Route::post('notice/active', [NoticeController::class, 'active'])->name('notices.active');
+    Route::post('notice/delete', [NoticeController::class, 'destroy'])->name('notices.destroy');
+
+    // Site Pdf 
+    Route::get('sitepdf/manage', [SitePdfController::class, 'index'])->name('sitepdfs.index');
+    Route::get('sitepdf/create', [SitePdfController::class, 'create'])->name('sitepdfs.create');
+    Route::post('sitepdf/save', [SitePdfController::class, 'store'])->name('sitepdfs.store');
+    Route::get('sitepdf/{id}/edit', [SitePdfController::class, 'edit'])->name('sitepdfs.edit');
+    Route::post('sitepdf/update', [SitePdfController::class, 'update'])->name('sitepdfs.update');
+    Route::post('sitepdf/inactive', [SitePdfController::class, 'inactive'])->name('sitepdfs.inactive');
+    Route::post('sitepdf/active', [SitePdfController::class, 'active'])->name('sitepdfs.active');
+    Route::post('sitepdf/delete', [SitePdfController::class, 'destroy'])->name('sitepdfs.destroy');
+
+    
+    // Test Exam 
+    Route::get('testexam/manage', [TestExamController::class, 'index'])->name('testexams.index');
+    Route::get('testexam/create', [TestExamController::class, 'create'])->name('testexams.create');
+    Route::post('testexam/save', [TestExamController::class, 'store'])->name('testexams.store');
+    Route::get('testexam/{id}/edit', [TestExamController::class, 'edit'])->name('testexams.edit');
+    Route::post('testexam/update', [TestExamController::class, 'update'])->name('testexams.update');
+    Route::post('testexam/inactive', [TestExamController::class, 'inactive'])->name('testexams.inactive');
+    Route::post('testexam/active', [TestExamController::class, 'active'])->name('testexams.active');
+    Route::post('testexam/delete', [TestExamController::class, 'destroy'])->name('testexams.destroy');
+
     Route::get('orderstatus/manage', [OrderStatusController::class, 'index'])->name('orderstatus.index');
     Route::get('orderstatus/{id}/show', [OrderStatusController::class, 'show'])->name('orderstatus.show');
     Route::get('orderstatus/create', [OrderStatusController::class, 'create'])->name('orderstatus.create');

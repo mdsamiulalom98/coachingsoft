@@ -87,9 +87,7 @@ class NoticeController extends Controller
 
         $update_data = Notice::find($request->id);
         $input = $request->all();
-
-       
-        
+ 
         $input['status'] = $request->status ? 1 : 0;
         $update_data->update($input);
 

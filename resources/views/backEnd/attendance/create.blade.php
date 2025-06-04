@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-auto">
                         <div class="quick_btn">
-                            <a href="{{route('students.create')}}"><i class="ti ti-plus"></i> Attendance List</a>
+                            <a href="{{route('attendances.index')}}"><i class="ti ti-plus"></i> Attendance List</a>
                         </div>
                     </div>
                 </div>

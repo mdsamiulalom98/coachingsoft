@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
-use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Student;
 use App\Models\CourseOrder;
 use App\Models\Order;
@@ -14,12 +11,17 @@ use App\Models\OrderDetails;
 use App\Models\Shipping;
 use App\Models\Setting;
 use App\Models\Attendance;
+use App\Models\Course;
+use App\Models\Chapter;
+use App\Models\Lesson;
 use Carbon\Carbon;
+use Session;
+use Toastr;
+use Auth;
 use Cart;
-
 class StudentController extends Controller
 {
-    private function setting()
+        private function setting()
     {
         return Setting::select('name')->first();
     }
@@ -32,25 +34,25 @@ class StudentController extends Controller
     {
         // return $request->all();
         $this->validate($request, [
-            'name' => 'required',
-            'phone_number' => 'required|max:11|unique:students|regex:/^\S*$/u',
-            'password' => 'required|min:6|confirmed',
-        ]);
+                'name' => 'required',
+                'phone_number' => 'required|max:11|unique:students|regex:/^\S*$/u',
+                'password' => 'required|min:6|confirmed',
+            ]);
+        
+        $token= rand(1111,9999);
 
-        $token = rand(1111, 9999);
-
-        $store_data = new Student();
-        $store_data->name = $request->name;
-        $store_data->phone_number = $request->phone_number;
-        $store_data->add_date = Carbon::now();
-        $store_data->roll_number = $this->rollGenerate();
-        $store_data->platform = 'online';
-        $store_data->verify = $token;
-        $store_data->status = 0;
-        $store_data->password = bcrypt(request('password'));
+        $store_data                 = new Student();
+        $store_data->name           = $request->name;
+        $store_data->phone_number   = $request->phone_number;
+        $store_data->add_date       = Carbon::now();
+        $store_data->roll_number    = $this->rollGenerate();
+        $store_data->platform       = 'online';
+        $store_data->verify         = $token;
+        $store_data->status         = 0;
+        $store_data->password       = bcrypt(request('password'));
         $store_data->save();
 
-        Session::put('verify_phone', $store_data->phone_number);
+        Session::put('verify_phone',$store_data->phone_number);
         Toastr::success('Congratulation your account create successfully', 'success!');
         return redirect()->route('student.verify');
     }
@@ -91,8 +93,8 @@ class StudentController extends Controller
             'password' => 'required',
         ]);
 
-        $check_auth = Student::select('id', 'phone_number')->where('phone_number', $request->phone_number)->first();
-        if (!$check_auth) {
+        $check_auth =  Student::select('id','phone_number')->where('phone_number', $request->phone_number)->first();
+        if(!$check_auth){
             Toastr::error('Oops', 'You have no account');
             return back();
         }
@@ -100,7 +102,7 @@ class StudentController extends Controller
         $credentials = ['phone_number' => $request->phone_number, 'password' => $request->password];
         if (Auth::guard('student')->attempt($credentials)) {
             Toastr::success('Congratulation you login successfully', 'success!');
-
+            
             return redirect()->route('student.dashboard');
         } else {
             Toastr::error('Oops', 'Your credentials does not match!');
@@ -108,8 +110,7 @@ class StudentController extends Controller
         }
     }
 
-    public function dashboard(Request $request)
-    {
+    public function dashboard(Request $request){
         $student = Auth::guard('student')->user();
         $totalpresent = Attendance::where(['status' => 1, 'student_id' => $student->id])->whereMonth('created_at', Carbon::now()->month)->count();
         $totalabsent = Attendance::where(['status' => 0, 'student_id' => $student->id])->whereMonth('created_at', Carbon::now()->month)->count();
@@ -122,11 +123,26 @@ class StudentController extends Controller
         $memberInfo = Student::find(Auth::guard('student')->user()->id);
         return view('frontEnd.layouts.student.profile', compact('memberInfo'));
     }
-    public function enrollcourse()
-    {
-        $enrcourses = CourseOrder::where('student_id', Auth::guard('student')->user()->id)->with('course')->get();
-        // return $enrcourses;
+    public function enrollcourse() {
+        $enrcourses = CourseOrder::where(['student_id'=>Auth::guard('student')->user()->id,'status'=>'paid'])->with('course')->get();
         return view('frontEnd.layouts.student.enrolled', compact('enrcourses'));
+    }
+     public function course_video(Request $request){
+
+        $enrcourses = CourseOrder::where(['student_id'=>Auth::guard('student')->user()->id,'course_id'=>$request->course,'status'=>'paid'])->with('course')->first();
+
+        if(!$enrcourses){
+            Toastr::error('Oops', 'Your are trying invalid access!');
+            return back();
+        }
+        $details = Course::where('id', $request->course)->with('chapters.lesson')->first();
+        $chapters = Chapter::where(['course_id' => $request->course, 'status' => 1])->with('lesson')->get();
+        if ($request->play) {
+            $play_video = Lesson::where(['id' => $request->play, 'status' => 1])->first();
+        } else {
+            $play_video = Lesson::where(['status' => 1])->first();
+        }
+        return view('frontEnd.layouts.student.course_video', compact('chapters', 'play_video'));
     }
 
     public function settings()
@@ -212,7 +228,7 @@ class StudentController extends Controller
         }
     }
 
-
+   
     public function forgot_password()
     {
         return view('frontEnd.layouts.student.forgot_password');
@@ -220,7 +236,7 @@ class StudentController extends Controller
 
     public function forgot_verify(Request $request)
     {
-        $auth_info = Student::select('id', 'phone_number')->where('phone_number', $request->phone_number)->first();
+        $auth_info = Student::select('id','phone_number')->where('phone_number', $request->phone_number)->first();
         if (!$auth_info) {
             Toastr::error('Your phone number not found', 'Failed');
             return back();
@@ -243,7 +259,7 @@ class StudentController extends Controller
     public function forgot_store(Request $request)
     {
 
-        $auth_info = Student::select('id', 'phone_number', 'forgot', 'password')->where('phone_number', session::get('verify_phone'))->first();
+        $auth_info = Student::select('id','phone_number','forgot','password')->where('phone_number', session::get('verify_phone'))->first();
         if ($auth_info->forgot != $request->otp) {
             Toastr::error('Failed', 'Your OTP not match');
             return redirect()->back();
@@ -363,7 +379,7 @@ class StudentController extends Controller
     public function notice(Request $request)
     {
         $notices = Notice::latest()->get();
-
+        
         return view('frontEnd.layouts.student.notice', compact('notices'));
     }
     public function notification(Request $request)
@@ -399,6 +415,8 @@ class StudentController extends Controller
             'address' => 'required',
         ]);
 
+
+    
         if (Cart::count() <= 0) {
             Toastr::error('Your shopping empty', 'Failed!');
             return redirect()->back();
@@ -409,13 +427,13 @@ class StudentController extends Controller
         $subtotal = str_replace('.00', '', $subtotal);
         $discount = Session::get('discount');
 
-        $shipping_area = Setting::first();
-        if ($request->area == 'Inside Dinajpur') {
-            $shipping_charge = $shipping_area->inside_charge;
-        } else {
-            $shipping_charge = $shipping_area->outside_charge;
+        $shipping_area  = Setting::first();
+        if($request->area == 'Inside Dinajpur'){
+            $shipping_charge  = $shipping_area->inside_charge;
+        }else{
+            $shipping_charge  = $shipping_area->outside_charge;
         }
-
+        
         if (Auth::guard('student')->user()) {
             $student_id = Auth::guard('student')->user()->id;
         } else {
@@ -423,50 +441,50 @@ class StudentController extends Controller
             if ($exits_student) {
                 $student_id = $exits_student->id;
             } else {
-                $password = rand(111111, 999999);
-                $store_data = new Student();
-                $store_data->name = $request->name;
-                $store_data->phone_number = $request->phone;
-                $store_data->add_date = Carbon::now();
-                $store_data->roll_number = $this->rollGenerate();
-                $store_data->platform = 'online';
-                $store_data->verify = 1;
-                $store_data->status = 0;
-                $store_data->password = bcrypt($password);
+                $password = rand(111111,999999);
+                $store_data                 = new Student();
+                $store_data->name           = $request->name;
+                $store_data->phone_number   = $request->phone;
+                $store_data->add_date       = Carbon::now();
+                $store_data->roll_number    = $this->rollGenerate();
+                $store_data->platform       = 'online';
+                $store_data->verify         = 1;
+                $store_data->status         = 0;
+                $store_data->password       = bcrypt($password);
                 $store_data->save();
                 $student_id = $store_data->id;
             }
         }
 
         // order data save
-        $order = new Order();
-        $order->invoice_id = $this->invoiceGenerate();
-        $order->amount = ($subtotal + $shipping_charge) - $discount;
-        $order->discount = $discount ? $discount : 0;
-        $order->student_id = $student_id;
-        $order->shipping_charge = $shipping_charge;
-        $order->order_status = 1;
-        $order->note = $request->note;
+        $order                   = new Order();
+        $order->invoice_id       = rand(111111,999999);
+        $order->amount           = ($subtotal + $shipping_charge) - $discount;
+        $order->discount         = $discount ? $discount : 0;
+        $order->student_id       = $student_id;
+        $order->shipping_charge  = $shipping_charge;
+        $order->order_status     = 1;
+        $order->note             = $request->note;
         $order->save();
-
+       
         // shipping data save
-        $shipping = new Shipping();
-        $shipping->order_id = $order->id;
-        $shipping->student_id = $student_id;
-        $shipping->name = $request->name;
-        $shipping->phone = $request->phone;
-        $shipping->address = $request->address;
-        $shipping->area = $request->area;
+        $shipping              =   new Shipping();
+        $shipping->order_id    =   $order->id;
+        $shipping->student_id  =   $student_id;
+        $shipping->name        =   $request->name;
+        $shipping->phone       =   $request->phone;
+        $shipping->address     =   $request->address;
+        $shipping->area        =   $request->area;
         $shipping->save();
 
         foreach (Cart::content() as $cart) {
-            $order_details = new OrderDetails();
-            $order_details->order_id = $order->id;
-            $order_details->book_id = $cart['id'];
-            $order_details->book_name = $cart['name'];
-            $order_details->sale_price = $cart['price'];
-            $order_details->old_price = $cart['options']['old_price'];
-            $order_details->qty = $cart['quantity'];
+            $order_details                  =   new OrderDetails();
+            $order_details->order_id        =   $order->id;
+            $order_details->book_id         =   $cart['id'];
+            $order_details->book_name       =   $cart['name'];
+            $order_details->sale_price      =   $cart['price'];
+            $order_details->old_price       =   $cart['options']['old_price'];
+            $order_details->qty             =   $cart['quantity'];
             $order_details->save();
         }
 
@@ -474,6 +492,7 @@ class StudentController extends Controller
         Session::forget('free_shipping');
         Session::put('purchase_event', 'true');
         Toastr::success('Thanks, Your order place successfully', 'Success!');
+        return redirect()->back();
         return redirect('order-place/' . $order->id);
     }
 
@@ -487,17 +506,17 @@ class StudentController extends Controller
     function rollGenerate()
     {
         do {
-            $roll_number = rand(111111, 666666);
-            $exists = Student::select('id', 'roll_number')->where('roll_number', $roll_number)->exists();
+            $roll_number = rand(111111,666666);
+            $exists = Student::select('id','roll_number')->where('roll_number', $roll_number)->exists();
         } while ($exists);
 
         return $roll_number;
     }
     function invoiceGenerate()
     {
-        do {
-            $invoice_id = rand(111111, 666666);
-            $exists = Order::select('id', 'invoice_id')->where('invoice_id', $invoice_id)->exists();
+        do{
+            $invoice_id = rand(111111,666666);
+            $exists = Order::select('id','invoice_id')->where('invoice_id', $invoice_id)->exists();
         } while ($exists);
 
         return $invoice_id;
